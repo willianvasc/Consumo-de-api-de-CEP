@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumo de api cep</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body class="bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 my-5">
+                <h2>
+                    Bem vindo ao consumo da api do cep
+                </h2>
+                <label for="cep">Preencha seu cep para fazer requisição da api</label>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-6 my-5 mx-auto shadow rounded py-4 box-form text-center">
+                <input class="rounded bg-light p-2 my-2 border-0 border-bottom" type="text" placeholder="cep" name="cep"
+                    id="cep"><br>
+                <input class="rounded bg-light p-2 my-2 border-0 border-bottom" type="text" placeholder="logradouro"
+                    name="logradouro" id="logradouro"><br>
+                <input class="rounded bg-light p-2 my-2 border-0 border-bottom" type="text" placeholder="complemento"
+                    name="complemento" id="complemento"><br>
+                <input class="rounded bg-light p-2 my-2 border-0 border-bottom" type="text" placeholder="bairro"
+                    name="bairro" id="bairro"><br>
+                <input class="rounded bg-light p-2 my-2 border-0 border-bottom" type="text" placeholder="localidade"
+                    name="localidade" id="localidade"><br>
+                <div class="mt-3">
+                    <button class=" btn btn-dark" onclick="recebeCep()">Consultar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+    let cep = document.getElementById("cep");
+    cep.addEventListener('keyup', function () {
+
+        let api = "https://viacep.com.br/ws/" + cep.value + "/json/";
+
+        fetch(api).then(function (response) {
+            response.json().then(function (data) {
+                console.log(data);
+                mostrarDados(data);
+            })
+        })
+
+    })
+
+
+    function mostrarDados(dados) {
+        let logradouroInput = document.getElementById("logradouro");
+        let complementoInput = document.getElementById("complemento");
+        let bairroInput = document.getElementById("bairro");
+        let localidadeInput = document.getElementById("localidade");
+        logradouroInput.value = dados.logradouro;
+        complementoInput.value = dados.complemento;
+        bairroInput.value = dados.bairro;
+        localidadeInput.value = dados.localidade;
+
+    }
+</script>
+
+</html>
